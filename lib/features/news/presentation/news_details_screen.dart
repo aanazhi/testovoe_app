@@ -6,8 +6,10 @@ import '../provider/detail_provider.dart';
 
 class NewsDetailScreen extends ConsumerStatefulWidget {
   final Article article;
+  final String username;
 
-  const NewsDetailScreen({super.key, required this.article});
+  const NewsDetailScreen(
+      {super.key, required this.article, required this.username});
 
   @override
   ConsumerState<NewsDetailScreen> createState() => _NewsDetailScreenState();
@@ -70,7 +72,7 @@ class _NewsDetailScreenState extends ConsumerState<NewsDetailScreen> {
                         onSubmitted: (text) {
                           ref
                               .read(detailProvider(article!.url!).notifier)
-                              .addComment('Аноним', text);
+                              .addComment(widget.username, text);
                           _commentController.clear();
                         },
                       ),

@@ -35,6 +35,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   Future<void> login(String username, String password) async {
     state = state.copyWith(isLoading: true);
     final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('username', username);
     await prefs.setString('token', 'dummy_token');
     state = state.copyWith(isLoggedIn: true, isLoading: false);
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testovoe_news/features/news/presentation/news_details_screen.dart';
 import 'package:testovoe_news/features/news/provider/detail_provider.dart';
 import '../provider/news_provider.dart';
@@ -13,6 +14,20 @@ class NewsListScreen extends ConsumerStatefulWidget {
 
 class _NewsListScreenState extends ConsumerState<NewsListScreen> {
   final TextEditingController _searchController = TextEditingController();
+  String? _username;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUsername();
+  }
+
+  Future<void> _loadUsername() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    _username = prefs.getString('username');
+    print('Username - $_username');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +83,8 @@ class _NewsListScreenState extends ConsumerState<NewsListScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    NewsDetailScreen(article: article),
+                                builder: (context) => NewsDetailScreen(
+                                    article: article, username: _username!),
                               ),
                             );
                           },
