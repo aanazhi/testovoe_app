@@ -26,7 +26,6 @@ class _NewsListScreenState extends ConsumerState<NewsListScreen> {
     final prefs = await SharedPreferences.getInstance();
 
     _username = prefs.getString('username');
-    print('Username - $_username');
   }
 
   @override
